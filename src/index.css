@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
+
+@import "tailwindcss";
+@plugin "daisyui" {
+    themes: light --default;
+
+};
+
+@plugin "daisyui/theme" {
+  name: "light";
+  default: true;
+  --color-primary: #CAEB66;
+  --color-secondary: #03373D;
+}
+
+
+
+
+
+
+body{
+  font-family: "Urbanist", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  background-color: #EAECED;
+}
+
+/* NAV LINK ACTIVE/INACTIVE */
+.inactive_link {
+    color: #FFFFFF; 
+    font-size: 16px;
+}
+
+.active_link {
+    background-color: #CAEB66;
+    border-radius: 20px;
+    font-weight: bold;
+}
+
+/* ABOUT US */
+
+.active{
+  text-decoration: underline;
+}
+
+.inactive{
+  text-decoration: none;
+}
+
+
+
