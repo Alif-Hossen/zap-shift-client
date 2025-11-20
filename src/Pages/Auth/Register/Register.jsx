@@ -31,6 +31,7 @@ const Register = () => {
                     <input type="password" {...register('password', {
                         required: true,
                         minLength: 6,
+                        pattern: /^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).+$/
                     })} className="input" placeholder="Password" />
 
                     {/* ERROR SHOW --> */}
@@ -40,7 +41,11 @@ const Register = () => {
                     }
                     {
                         errors.password?.type=== 'required' && 
-                        <p className='text-red-500 font-bold'>Password Is Required</p>
+                        <p className='text-red-500 font-semibold'>Password Is Required</p>
+                    }
+                    {
+                        errors.password?.type=== 'pattern' &&
+                        <p className='text-red-500 font-semibold'>Password Must Have At Least One UpperCase, One LowerCase, AT Least One Number And One Special Character.</p>
                     }
 
 
