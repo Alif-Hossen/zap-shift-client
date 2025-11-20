@@ -1,6 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import useAuth from '../../../Hooks/useAuth';
+import { NavLink } from 'react-router';
 
 const Register = () => {
 
@@ -60,7 +61,9 @@ const Register = () => {
 
                     <div><a className="link link-hover">Forgot password?</a></div>
                     <button className="btn btn-neutral mt-4">Register</button>
+
                 </fieldset>
+                <p>Already Have An Account? <span className='text-blue-800 font-bold underline hover:text-green-800'><NavLink to="/login">Login</NavLink></span></p>
             </form>
         </div>
     );
