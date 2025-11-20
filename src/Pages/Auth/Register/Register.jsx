@@ -1,7 +1,10 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import useAuth from '../../../Hooks/useAuth';
 
 const Register = () => {
+
+    const { registerUser } = useAuth();
 
     const {
         register,
@@ -12,6 +15,12 @@ const Register = () => {
 
     const handleRegistration = (data) => {
         console.log('After Register', data);
+        registerUser(data.email, data.password).then(result => {
+            console.log(result.user);
+        })
+        .catch(error => {
+            console.log(error)
+        })
     }
 
     return (
@@ -23,7 +32,7 @@ const Register = () => {
                     <input type="email" {...register('email', { required: true })} className="input" placeholder="Email" />
 
                     {
-                        errors.email?.type==='required' && 
+                        errors.email?.type === 'required' &&
                         <p className='text-red-500 font-bold'>Email Is Required.!</p>
                     }
 
@@ -36,21 +45,21 @@ const Register = () => {
 
                     {/* ERROR SHOW --> */}
                     {
-                        errors.password?.type=== 'minLength' && 
+                        errors.password?.type === 'minLength' &&
                         <p className='text-red-500 font-bold'>Password Should Be Minimum 6 Character</p>
                     }
                     {
-                        errors.password?.type=== 'required' && 
+                        errors.password?.type === 'required' &&
                         <p className='text-red-500 font-semibold'>Password Is Required</p>
                     }
                     {
-                        errors.password?.type=== 'pattern' &&
+                        errors.password?.type === 'pattern' &&
                         <p className='text-red-500 font-semibold'>Password Must Have At Least One UpperCase, One LowerCase, AT Least One Number And One Special Character.</p>
                     }
 
 
                     <div><a className="link link-hover">Forgot password?</a></div>
-                    <button className="btn btn-neutral mt-4">Login</button>
+                    <button className="btn btn-neutral mt-4">Register</button>
                 </fieldset>
             </form>
         </div>
