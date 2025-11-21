@@ -5,13 +5,21 @@ import useAuth from '../../../Hooks/useAuth';
 
 const Navbar = () => {
 
-    const { user } = useAuth();
+    const handleLogOut = () => {
+        logOut()
+            .then()
+            .catch(error => {
+                console.log(error);
+            })
+    }
+
+    const { user, logOut } = useAuth();
 
     const links = <>
         <li><NavLink>Services</NavLink></li>
         <li><NavLink>Something</NavLink></li>
         <li><NavLink to="/coverage" className={({ isActive }) => isActive ? 'active_link' : 'inActive_link'}>Coverage</NavLink></li>
-        <li><NavLink to="/aboutUs" className={ ({isActive}) => isActive ? 'active_link' : 'inActive_link'}>AboutUs</NavLink></li>
+        <li><NavLink to="/aboutUs" className={({ isActive }) => isActive ? 'active_link' : 'inActive_link'}>AboutUs</NavLink></li>
     </>
     return (
         <div className="navbar bg-base-100 shadow-sm rounded-2xl mt-4">
@@ -39,12 +47,14 @@ const Navbar = () => {
             </div>
             <div className="navbar-end">
                 {
-                    user ? 
-                    <a className="btn">Logout</a> 
-                    : 
-                    <NavLink className="btn" to="/login">Log in</NavLink>
+                    user ?
+                        <a onClick={handleLogOut} className="btn">Logout</a>
+                        :
+                        <NavLink className="btn" to="/login">Log in</NavLink>
                 }
-                
+
+                <NavLink className="btn btn-primary text-black mx-4" to="/">Be A Rider</NavLink>
+
             </div>
         </div>
     );
