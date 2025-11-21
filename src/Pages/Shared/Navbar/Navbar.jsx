@@ -53,7 +53,7 @@ const Navbar = () => {
                         <NavLink className="btn" to="/login">Log in</NavLink>
                 }
 
-                <NavLink className="btn btn-primary text-black mx-4" to="/">Be A Rider</NavLink>
+                <NavLink className="btn btn-primary text-black mx-4" to="/rider">Be A Rider</NavLink>
 
             </div>
         </div>

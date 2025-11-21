@@ -1,7 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import useAuth from '../../../Hooks/useAuth';
-import { NavLink } from 'react-router';
+import { NavLink, useLocation, useNavigate } from 'react-router';
 import SOcialLogin from '../SocialLogin/SOcialLogin';
 import axios from 'axios';
 
@@ -15,6 +15,10 @@ const Register = () => {
         formState: { errors },
 
     } = useForm();
+
+    const location = useLocation();
+    const navigate = useNavigate();
+    console.log("In Register ", location);
 
     const handleRegistration = (data) => {
         console.log('After Register', data.photo[0]);
@@ -44,6 +48,7 @@ const Register = () => {
                     updateUserProfile(userProfile)
                     .then( () => {
                         console.log("User Profile Updated Done..!");
+                        navigate(location.state || "/");
                     })
                     .catch( error => {
                         console.log(error);
@@ -119,10 +124,15 @@ const Register = () => {
                     <SOcialLogin></SOcialLogin>
 
                 </fieldset>
-                <p>Already Have An Account? <span className='text-blue-800 font-bold underline hover:text-green-800'><NavLink to="/login">Login</NavLink></span></p>
+
+                <p>Already Have An Account? <span className='text-blue-800 font-bold underline hover:text-green-800'>
+                    <NavLink 
+                        state={location.state}
+                        to="/login">Login</NavLink></span></p>
             </form>
         </div>
     );
 };
 
 export default Register;
+

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import useAuth from '../../../Hooks/useAuth';
-import { NavLink } from 'react-router';
+import { NavLink, useLocation, useNavigate } from 'react-router';
 import SOcialLogin from '../SocialLogin/SOcialLogin';
 
 const Login = () => {
@@ -12,15 +12,21 @@ const Login = () => {
         formState: { errors },
     } = useForm();
 
-    const { signInUser } = useAuth()
+    const { signInUser } = useAuth();
+
+    const location = useLocation();
+    const navigate = useNavigate();
+    // console.log('In The Login Page', location);
 
     const handleLogin = (data) => {
         console.log('Form Data', data);
-        signInUser(data.email, data.password).then(result => {
-            console.log(result);
-        }).catch(error => {
-            console.log(error);
-        })
+        signInUser(data.email, data.password)
+            .then(result => {
+                console.log(result);
+                navigate(location?.state || "/");
+            }).catch(error => {
+                console.log(error);
+            })
     }
 
     return (
@@ -64,8 +70,14 @@ const Login = () => {
                     <div><a className="link link-hover">Forgot password?</a></div>
                     <button className="btn btn-neutral mt-4">Login</button>
                 </fieldset>
-                <SOcialLogin></SOcialLogin>     
-                <p>New To Zap Shift? <span className='text-blue-800 font-bold underline hover:text-green-800'><NavLink to="/register">Register</NavLink></span></p>
+                <SOcialLogin></SOcialLogin>
+
+                <p>
+                    New To Zap Shift? <span className='text-blue-800 font-bold underline hover:text-green-800'>
+                        <NavLink
+                            state={location.state}
+                            to="/register">Register</NavLink></span>
+                </p>
             </form>
         </div>
 
