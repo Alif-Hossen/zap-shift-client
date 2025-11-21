@@ -16,9 +16,15 @@ const Register = () => {
     } = useForm();
 
     const handleRegistration = (data) => {
-        console.log('After Register', data);
+        console.log('After Register', data.photo);
         registerUser(data.email, data.password).then(result => {
             console.log(result.user);
+
+            // HAVE TO STORE THE IMAGE AND GET THE PHOTO URL --
+            // UPDATE USER PROFILE HERE ->
+
+
+
         })
             .catch(error => {
                 console.log(error)
@@ -32,20 +38,41 @@ const Register = () => {
             <p className='text-center'>Please Register</p>
             <form className="card-body" onSubmit={handleSubmit(handleRegistration)}>
                 <fieldset className="fieldset">
+
+                    {/* NAME -> */}
+                    <label className="label">Name</label>
+                    <input type="text" {...register('name', { required: true })} className="input" placeholder="Enter Your Name" />
+
+                     {
+                        errors.name?.type === 'required' &&
+                        <p className='text-red-500 font-bold'>Name Is Required.!</p>
+                    }
+
+                    {/* PHOTO -> */}
+                    <label className="label">Photo</label>
+                    <input type="file" {...register('photo', { required: true })} className="file-input" placeholder="Choose Your Photo" />
+
+                     {
+                        errors.photo?.type === 'required' &&
+                        <p className='text-red-500 font-bold'>Photo Is Required.!</p>
+                    }
+
+                    {/* EMAIL -> */}
                     <label className="label">Email</label>
-                    <input type="email" {...register('email', { required: true })} className="input" placeholder="Email" />
+                    <input type="email" {...register('email', { required: true })} className="input" placeholder="Enter Your Email" />
 
                     {
                         errors.email?.type === 'required' &&
                         <p className='text-red-500 font-bold'>Email Is Required.!</p>
                     }
 
+                    {/* PASSWORD -> */}
                     <label className="label">Password</label>
                     <input type="password" {...register('password', {
                         required: true,
                         minLength: 6,
                         pattern: /^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).+$/
-                    })} className="input" placeholder="Password" />
+                    })} className="input" placeholder="Enter Your Password" />
 
                     {/* ERROR SHOW --> */}
                     {

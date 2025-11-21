@@ -35,7 +35,7 @@ const Login = () => {
                     <label className="label">Email</label>
                     <input type="email" {...register('email', { required: true }
 
-                    )} className="input" placeholder="Email" />
+                    )} className="input" placeholder="Enter Your Email" />
 
                     {
                         errors.email?.type === 'required' &&
@@ -50,7 +50,7 @@ const Login = () => {
                         required: true,
                         minLength: 6,
 
-                    })} className="input" placeholder="Password" />
+                    })} className="input" placeholder="Enter Your Password" />
 
                     {
                         errors.password?.type === 'minLength' &&
