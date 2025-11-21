@@ -19,6 +19,7 @@ const Navbar = () => {
         <li><NavLink>Services</NavLink></li>
         <li><NavLink>Something</NavLink></li>
         <li><NavLink to="/coverage" className={({ isActive }) => isActive ? 'active_link' : 'inActive_link'}>Coverage</NavLink></li>
+        <li><NavLink to="/send_parcel" className={({ isActive }) => isActive ? 'active_link' : 'inActive_link'}>Send Parcel</NavLink></li>
         <li><NavLink to="/aboutUs" className={({ isActive }) => isActive ? 'active_link' : 'inActive_link'}>AboutUs</NavLink></li>
     </>
     return (
