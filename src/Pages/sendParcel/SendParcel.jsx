@@ -1,14 +1,29 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { useLoaderData } from 'react-router';
 
 const SendParcel = () => {
 
     const {
         register,
-        formState: { errors },
         handleSubmit,
+        watch,
+        formState: { errors },
+    
+    } = useForm();
 
-    } = useForm()
+    const serviceCenters = useLoaderData();
+    const regionsDuplicate = serviceCenters.map(c => c.region);
+    // const regions = new Set(regionsDuplicate); // SET EE CONVERT HOBE
+    const regions = [...new Set(regionsDuplicate)];
+    // console.log(regions);
+    const senderRegion = watch('senderRegion')
+
+    const districtsByRegion = region => {
+        const regionDistricts = serviceCenters.filter ( c => c.region === region);
+        const districts = regionDistricts.map(d => d.district);
+        return districts;
+    }
 
     const handleSendParcel = data => {
         console.log(data)
@@ -47,8 +62,9 @@ const SendParcel = () => {
 
                 {/* TWO COLUMN */}
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-12'>
+
                     {/* SENDER DETAILS*/}
-                    
+
                     <fieldset className="fieldset">
                         <h4 className="text-2xl font-semibold">Sender Details</h4>
 
@@ -56,24 +72,53 @@ const SendParcel = () => {
                         <label className="label">Sender Name</label>
                         <input type="text" {...register('senderName')} className="input w-full" placeholder="Enter Sender Name" />
 
+
+
                         {/* SENDER ADDRESS - */}
                         <label className="label mt-4">Sender Address</label>
                         <input type="text" {...register('senderAddress')} className="input w-full" placeholder="Enter Sender Address" />
+
                         {/* SENDER PHONE NUMBER - */}
                         <label className="label mt-4">Sender Phone Number</label>
                         <input type="text" {...register('senderPhoneNumber')} className="input w-full" placeholder="Enter Sender Phone Number" />
 
-                        {/* SENDER DISTRICT - */}
-                        <label className="label mt-4">Sender District</label>
-                        <input type="text" {...register('senderDistrict')} className="input w-full" placeholder="Enter Sender District" />
+                        {/* SENDER REGION -> */}
+                        <fieldset className="fieldset">
+                            <legend className="fieldset-legend">Sender Region</legend>
+                            <select {...register('senderRegion')} defaultValue="Pick a region" className="select">
+                                <option disabled={true}>Pick a Region</option>
+                                {
+                                    regions.map((r,i) => <option key={i} value={r}>{r}</option>)
+                                }
+                            </select>
+                        </fieldset>
+
+                        {/* SENDER DISTRICTS -> */}
+                        <fieldset className="fieldset">
+                            <legend className="fieldset-legend">Sender District</legend>
+                            <select {...register('senderDistrict')} defaultValue="Pick a region" className="select">
+                                <option disabled={true}>Pick a District</option>
+                                {
+                                    districtsByRegion(senderRegion).map((r,i) => <option key={i} value={r}>{r}</option>)
+                                }
+                            </select>
+                        </fieldset>
+
+
+                       
+
+
 
                         {/* SENDER INSTRUCTION - */}
                         <label className="label mt-4">Pickup Instruction</label>
-                        <textarea type="text" {...register('pickUpInstruction')} className="input w-full" placeholder="Enter Pickup Instruction">
+                        <textarea type="text" {...register('senderPickUpInstruction')} className="input w-full" placeholder="Enter Pickup Instruction">
 
                         </textarea>
                         {/* <input type="text" {...register('pickUpInstruction')} className="input w-full" placeholder="Enter Pickup Instruction" /> */}
                     </fieldset>
+
+
+                    {/* ---------------- */}
 
 
                     {/* RECEIVER DETAILS - */}
@@ -98,7 +143,7 @@ const SendParcel = () => {
 
                         {/*  INSTRUCTION - */}
                         <label className="label mt-4">Pickup Instruction</label>
-                        <textarea type="text" {...register('pickUpInstruction')} className="input w-full" placeholder="Enter Pickup Instruction">
+                        <textarea type="text" {...register('receiverPickUpInstruction')} className="input w-full" placeholder="Enter Pickup Instruction">
 
                         </textarea>
                     </fieldset>
