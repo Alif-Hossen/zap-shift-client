@@ -1,7 +1,9 @@
 import React from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import { useLoaderData } from 'react-router';
-// import Swal from 'sweetalert2';
+import Swal from 'sweetalert2';
+import useAxiosSecure from '../../Hooks/useAxiosSecure';
+import useAuth from '../../Hooks/useAuth';
 
 const SendParcel = () => {
 
@@ -9,9 +11,13 @@ const SendParcel = () => {
         register,
         handleSubmit,
         control,
-        formState: { errors },
+        // formState: { errors },
 
     } = useForm();
+
+    const { user } = useAuth
+
+    const axiosSecure = useAxiosSecure();
 
     const serviceCenters = useLoaderData();
     const regionsDuplicate = serviceCenters.map(c => c.region);
@@ -53,7 +59,32 @@ const SendParcel = () => {
 
         console.log('Cost -', cost);
 
-        
+        Swal.fire({
+            title: "Agree With The Cost.?",
+            text: `You Will Be Charge. ${cost} Taka`,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes.! I Agree."
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+
+                // SAVE THE PARCEL INFO TO THE DATABASE
+                axiosSecure.post('/parcels', data)
+                .then( res => {
+                    console.log('After Saving Parcel',res.data);
+                })
+
+
+                // Swal.fire({
+                //     title: "Deleted!",
+                //     text: "Your file has been deleted.",
+                //     icon: "success"
+                // });
+            }
+        });
 
     }
 
@@ -101,7 +132,9 @@ const SendParcel = () => {
 
                         {/* SENDER EMAIL - */}
                         <label className="label">Sender Email</label>
-                        <input type="email" {...register('senderEmail')} className="input w-full" placeholder="Enter Sender Email" />
+                        <input type="email" {...register('senderEmail', { required: true })} 
+                        defaultValue={user?.email}
+                        className="input w-full" placeholder="Enter Sender Email" />
 
                         {/* SENDER PHONE NUMBER - */}
                         <label className="label mt-4">Sender Phone Number</label>
@@ -205,3 +238,4 @@ const SendParcel = () => {
 };
 
 export default SendParcel;
+

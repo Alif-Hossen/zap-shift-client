@@ -21,6 +21,12 @@ const Navbar = () => {
         <li><NavLink to="/coverage" className={({ isActive }) => isActive ? 'active_link' : 'inActive_link'}>Coverage</NavLink></li>
         <li><NavLink to="/send_parcel" className={({ isActive }) => isActive ? 'active_link' : 'inActive_link'}>Send Parcel</NavLink></li>
         <li><NavLink to="/aboutUs" className={({ isActive }) => isActive ? 'active_link' : 'inActive_link'}>AboutUs</NavLink></li>
+
+        {
+            user && <>
+                <li><NavLink to="dashboard/my_parcels" className={({ isActive }) => isActive ? 'active_link' : 'inActive_link'}>My Parcels</NavLink></li>
+            </>
+        }
     </>
     return (
         <div className="navbar bg-base-100 shadow-sm rounded-2xl mt-4">
@@ -58,7 +64,7 @@ const Navbar = () => {
 
             </div>
         </div>
-    );
+        );
 };
 
-export default Navbar;
+        export default Navbar;
